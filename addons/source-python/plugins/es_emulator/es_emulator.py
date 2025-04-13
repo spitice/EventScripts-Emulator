@@ -35,6 +35,12 @@ def load():
     print('Adding "{}" to sys.path.'.format(ES_LIBS_PATH))
     sys.path.append(str(ES_LIBS_PATH))
 
+    # [css2025_win32] Compatibility fix
+    # Newer version of Python has moved collection.Callable to collections.abc.Callable.
+    # However, some code in es_emulator refers to old Collable path so just polyfill it.
+    import collections
+    collections.Callable = collections.abc.Callable
+
     print('Initializing console variables...')
     from . import cvars
 
