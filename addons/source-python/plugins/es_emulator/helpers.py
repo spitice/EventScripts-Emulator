@@ -117,7 +117,8 @@ NO_SRV_CHECK_GAMES = [
 
 if PLATFORM == 'windows':
     clib = memory.find_binary('msvcrt.dll')
-    tier1 = memory.find_binary('bin/tier0')
+    # tier1 = memory.find_binary('bin/tier0')
+    tier1 = memory.find_binary('bin/tier0.dll')
 else:
     clib_path = find_library('c')
     if clib_path is None:
@@ -426,7 +427,7 @@ def _dump_entity_table(entity, table, path, offset=0):
             value = ptr.get_float(current_offset)
         elif prop.type == SendPropType.VECTOR:
             value = '{},{},{}'.format(
-                ptr.get_float(current_offset), 
+                ptr.get_float(current_offset),
                 ptr.get_float(current_offset+4),
                 ptr.get_float(current_offset+8))
         elif prop.type == SendPropType.STRING:
@@ -461,7 +462,7 @@ def _dump_entity_table_for_createentitylist(entity, table, path, result_dict, of
         elif prop.type == SendPropType.VECTOR:
             value = '{},{},{}'.format(
                 ptr.get_float(current_offset),
-                ptr.get_float(current_offset+4), 
+                ptr.get_float(current_offset+4),
                 ptr.get_float(current_offset+8))
         elif prop.type == SendPropType.STRING:
             with ignore_unicode_errors():
@@ -472,7 +473,7 @@ def _dump_entity_table_for_createentitylist(entity, table, path, result_dict, of
             value = 'vectorXY'
         else:
             value = 'Unknown'
-            
+
         result_dict[current_path] = value
 
 
