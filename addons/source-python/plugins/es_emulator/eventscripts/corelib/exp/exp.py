@@ -52,7 +52,7 @@ def func_cond(args):
         return temp
     elif args[1] == 'notin':
         temp = '0'
-        exec('if not ' + str(args[0]) + ' in ' + str(args[2]) + '\:\ntemp = \'1\'')
+        exec('if not ' + str(args[0]) + ' in ' + str(args[2]) + '\\:\ntemp = \'1\'')
         return temp
     else:
         return '0'
@@ -262,8 +262,8 @@ def unload():
 
 def exp(args_dummy):
     args = es.getargs()
-    if ('\(' in args) or ('\)' in args):
-        args = args.replace('\(', '%left%').replace('\)', '%right%').replace('\"', '%quote%')
+    if ('\\(' in args) or ('\\)' in args):
+        args = args.replace('\\(', '%left%').replace('\\)', '%right%').replace('\"', '%quote%')
     if args and ('(' in args) and (')' in args):
         global funcs
         global uxpfuncs
@@ -351,8 +351,8 @@ def uxp_reg(args_dummy):
             es.dbgmsg(0, 'uxp_reg : invalid subcommand (create|delete|status)')
     else:
         es.dbgmsg(0, 'Syntax : uxp_reg <subcmd> <args>')
-    
-    
+
+
 
 
 def uxp_eval(func, args):
@@ -423,7 +423,7 @@ def exp_reg(args_dummy):
                     es.dbgmsg(0, 'exp_reg : invalid block given')
             elif  re.match('^.+\\..+(\\..+)?$', block):
                 temp = block.split('.')
-                
+
                 exec('temp = callable(' + block + ')')
                 if temp:
                     exec('funcs[func][\'function\'] = ' + block)
@@ -551,7 +551,7 @@ def test_exp():
 
 def test_uxp():
     for line in (
-        'profile begin uxp_test',         
+        'profile begin uxp_test',
         'testlib begin uxp1 "uxp test 1 - strlen()"',
         'uxp es_xset _uxp_testvar strlen(helloworld)',
         'testlib fail_unless _uxp_testvar equalto 10',
