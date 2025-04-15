@@ -10,7 +10,10 @@ import os
 HOST = "http://api.eventscripts.com/updatecheck/"
 
 description = "Controls whether EventScripts will automatically check for updates"
-checkForUpdates = es.ServerVar("eventscripts_checkforupdates", 1, description)
+# [css2025_win32]
+# Changed the default value of `eventscripts_checkforupdates` to 0
+# to disable check for updates to reduce loading map time (by approx. 20 secs).
+checkForUpdates = es.ServerVar("eventscripts_checkforupdates", 0, description)
 update_notice = es.ServerVar("eventscripts_lastupdatenotice", "unchecked",
             "Last status text returned when checking for eventscripts updates.")
 
