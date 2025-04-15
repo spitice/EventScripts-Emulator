@@ -60,6 +60,8 @@ def load():
     sys.modules['keyvalues'] = x
     es.load('esc')
     es.server.queuecmd('es_load corelib')
+    # [css2025_win32] Apply compatibility patch
+    es.server.queuecmd('es_load css2025_fix')
 
 def unload():
     raise NotImplementedError(
