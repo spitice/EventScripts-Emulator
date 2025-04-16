@@ -3,10 +3,13 @@ from colors import Color
 from messages import HudMsg
 from players.helpers import index_from_userid
 
-__all__ = [
-    "give_gametext",
-    "fire_gametext",
-]
+import es
+from esc.monkeypatch import monkeypatch
+
+#
+# game_text entity in css2025 seems to be broken so we are using our own implementation:
+# Leveraging HudMsg from Source.Python to emulate game_text's behavior controlled via give/ent_fire.
+#
 
 def apply_addoutput_to_hudmsg(hudMsg, params: str):
     args = params.split(" ")
@@ -69,3 +72,24 @@ def fire_gametext(userid, inputName: str, params: str = ""):
             player_gametext_map.pop(userid)
         case "_":
             print(f"[fire_gametext] Invalid input name: {inputName}")
+
+def apply():
+    @monkeypatch
+    def give(*args):
+        if len(args) >= 2:
+            target = args[1]
+            if target == "game_text":
+                es.dbgmsg(2, f"[css2025_win32] give_gametext")
+                give_gametext(args[0])
+                return
+        give(*args)
+
+    @monkeypatch
+    def fire(*args):
+        if len(args) >= 3:
+            target = args[1]
+            if target == "game_text":
+                es.dbgmsg(2, f"[css2025_win32] fire_gametext {args[2]}")
+                fire_gametext(args[0], *args[2:])
+                return
+        fire(*args)
