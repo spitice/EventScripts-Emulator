@@ -73,7 +73,8 @@ gamedir_cvar = ConVar(
 
 noisy_cvar = ConVar(
     'eventscripts_noisy',
-    '0',
+    # [css2025_win32] Enabled by default
+    '1',
     'Turns on script handling for noisy GameEvents (footsteps, reloads, etc).'
 )
 
