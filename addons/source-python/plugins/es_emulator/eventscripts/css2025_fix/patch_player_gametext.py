@@ -1,5 +1,6 @@
 
 from colors import Color
+import gamethread
 from messages import HudMsg
 from players.helpers import index_from_userid
 
@@ -67,7 +68,15 @@ def fire_gametext(userid, inputName: str, params: str = ""):
         case "addoutput":
             apply_addoutput_to_hudmsg(gametext.hudmsg, params)
         case "display":
-            gametext.hudmsg.send(gametext.player_index)
+            #
+            # Fix hud message in the first round of beachvolley not showing
+            # since round_start (calls Display) would be called before player_spawn.
+            # Just add a small delay to send hudmsg to mitigate this issue.
+            # However, you cannot send hudmsg via `fire` to different channels at the same tick.
+            # In this case, don't rely on `fire` and create HudMsg by your own.
+            #
+            # gametext.hudmsg.send(gametext.player_index)
+            gamethread.queue(gametext.hudmsg.send, gametext.player_index)
         case "kill":
             player_gametext_map.pop(userid)
         case "_":
