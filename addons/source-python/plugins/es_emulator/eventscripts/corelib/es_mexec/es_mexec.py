@@ -2,6 +2,7 @@
 # ./addons/eventscripts/corelib/es_mexec/es_mexec.py
 import es
 import cmdlib
+import gamethread
 import time
 
 import hashlib
@@ -25,17 +26,24 @@ def memoryExecuteCommand(pathToConfigFile):
     cfgFolder = Path(str(es.ServerVar('eventscripts_gamedir'))).joinpath('cfg')
     individualCFGFile = cfgFolder.joinpath(pathToConfigFile)
 
-    uniqueString = hashlib.md5(str(time.time()).encode('utf-8')).hexdigest()
-    configName = '%s.%s.mexec.cfg' % (individualCFGFile.namebase, uniqueString)
+    # [css2025_win32]
+    # Use non-unique name so it won't flood the cfg directory if it failes to
+    # remove temporary cfg files after the execution.
+    #uniqueString = hashlib.md5(str(time.time()).encode('utf-8')).hexdigest()
+    #configName = '%s.%s.mexec.cfg' % (individualCFGFile.namebase, uniqueString)
+    configName = f'temp.mexec.{individualCFGFile.namebase}.cfg'
     newFile = cfgFolder.joinpath(configName)
 
     try:
         individualCFGFile.copyfile(newFile)
         es.server.cmd('exec "%s"' % configName)
-        newFile.remove()
+        # [css2025_win32]
+        # Delay removing file to properly execute the temporary cfg file.
+        #newFile.remove()
+        gamethread.queue(newFile.remove)
     except IOError:
         es.dbgmsg(0, "ERROR: es_mexec cannot find the file path %s" % pathToConfigFile)
-         
+
 es.mexec = memoryExecuteCommand
 
 
