@@ -678,7 +678,7 @@ def effect(argv):
     operation = argv[1].lower()
     if operation == 'sparks':
         entity = TempEntity('Sparks')
-        entity.magnitude = atoi(argv[3])
+        entity.magnitude = atof(argv[3])
         entity.trail_length = atoi(argv[4])
         entity.direction = Vector(*splitvectorstring(argv[5])) if len(argv) > 4 else None
         entity.origin = Vector(*splitvectorstring(argv[2]))
@@ -698,10 +698,10 @@ def effect(argv):
         entity.blue = atoi(argv[15])
         entity.green = atoi(argv[14])
         entity.red = atoi(argv[13])
-        entity.amplitude = atoi(argv[12])
-        entity.end_width = atoi(argv[10])
-        entity.life_time = atoi(argv[8])
-        entity.start_width = atoi(argv[9])
+        entity.amplitude = atof(argv[12])
+        entity.end_width = atof(argv[10])
+        entity.life_time = atof(argv[8])
+        entity.start_width = atof(argv[9])
         entity.fade_length = atoi(argv[11])
         entity.frame_rate = atoi(argv[7])
         entity.halo_index = atoi(argv[5])

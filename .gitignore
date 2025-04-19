@@ -1,2 +1,8 @@
 __pycache__
 es_emulator/eventscripts/test
+
+.vscode
+addons/source-python/plugins/es_emulator/eventscripts/atracer
+addons/source-python/plugins/es_emulator/eventscripts/beachvolley
+addons/source-python/plugins/es_emulator/eventscripts/donkeykong
+addons/source-python/plugins/es_emulator/eventscripts/ezfilter
