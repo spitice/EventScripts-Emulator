@@ -5,6 +5,9 @@ import playerlib
 def health(userid, iHealth):
     playerlib.getPlayer(userid).setHealth(iHealth)
 
+def sethealth(userid, iHealth):
+    health(userid, iHealth)
+
 def speed(userid, multiplier):
     playerlib.getPlayer(userid).setSpeed(multiplier)
 
