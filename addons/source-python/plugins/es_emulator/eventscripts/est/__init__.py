@@ -20,5 +20,5 @@ def freeze(userid, isFrozen):
 def give(userid, weaponName):
     es.give(userid, weaponName)
 
-def spawn(userid, unknownArg = 0):
+def spawn(userid, bForce = 0):
     es.spawnplayer(userid)

@@ -2747,7 +2747,7 @@ def spawnplayer(argv):
         es.dbgms(0, 'Could not spawn userid: {}'.format(userid))
     else:
         try:
-            BaseEntity(index).spawn()
+            Player(index).spawn(True)
         except ValueError:
             es.dbgmsg(0, 'Could not spawn entity: {}'.format(index))
 
