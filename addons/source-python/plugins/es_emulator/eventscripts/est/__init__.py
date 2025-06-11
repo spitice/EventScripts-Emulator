@@ -27,8 +27,10 @@ def give(userid, weaponName):
 
 def spawn(userid, bForce = 0):
     #es.spawnplayer(userid)  # spawnplayer cannot specify bForce
-    index = index_from_userid(int(userid))
-    Player(index).spawn(bForce)
+    Player.from_userid(int(userid)).spawn(bForce)
+
+def team(userid, team):
+    Player.from_userid(int(userid)).switch_team(team)
 
 #
 # Import this module from somewhere at least once to enable the following commands
