@@ -32,6 +32,14 @@ def spawn(userid, bForce = 0):
 def team(userid, team):
     Player.from_userid(int(userid)).switch_team(team)
 
+def slay(userid):
+    playerlib.getPlayer(userid).slay()
+
+def damage(inflictorUserid, victimUserid, damage):
+    player = playerlib.getPlayer(victimUserid)
+    health = player.getHealth()
+    player.setHealth(health - damage)
+
 #
 # Import this module from somewhere at least once to enable the following commands
 #
