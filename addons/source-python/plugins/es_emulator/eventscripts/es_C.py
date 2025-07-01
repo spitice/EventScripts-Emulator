@@ -212,6 +212,18 @@ def ForceServerCommand(command_str):
     if not c.tokenize(command_str):
         return 1
 
+    #
+    # [css2025_win32]
+    #
+    # ConCommand::dispatch seems to be broken when using on CVars managed by SourceMod plugins.
+    # So avoid using it.
+    #
+    # For now, let's just use `insert_command_string` for everything.
+    # (which seems to be less performant I guess.)
+    #
+    insert_command_string(command_str)
+    return 1
+
     con_command = cvar.find_command(c[0])
     if con_command:
         con_command.dispatch(c)

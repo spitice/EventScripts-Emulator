@@ -4,6 +4,15 @@ from commands import Command
 import es
 from esc.monkeypatch import monkeypatch
 
+#
+# DEPRECATED
+#
+# monkeypatch-ing cannot hook all calls to ForceServerCommand
+# So I've decided to change the original function instead.
+#
+# See eventscripts/es_C.py > ForceServerCommand function
+#
+
 def apply():
     #
     # Sometimes using `con_command.dispatch` on cvars by managed by SourceMod plugins
