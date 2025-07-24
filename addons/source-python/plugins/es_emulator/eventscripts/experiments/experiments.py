@@ -1,10 +1,12 @@
 
+import experiments.expr_burn
 import experiments.expr_centermsg
 import experiments.expr_game_text
 import experiments.expr_sm_cvars
 import experiments.expr_sound
 import experiments.expr_strip
 
+is_burn_enabled = False
 is_centermsg_enabled = False
 is_game_text_enabled = False
 is_sm_cvars_enabled = False
@@ -24,6 +26,8 @@ def player_spawn(ev):
         experiments.expr_strip.player_spawn(ev)
 
 def weapon_fire(ev):
+    if is_burn_enabled:
+        experiments.expr_burn.weapon_fire(ev)
     if is_game_text_enabled:
         experiments.expr_game_text.weapon_fire(ev)
 

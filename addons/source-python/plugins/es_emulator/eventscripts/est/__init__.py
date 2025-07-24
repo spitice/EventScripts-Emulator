@@ -6,7 +6,6 @@ import playerlib
 
 from commands.typed import TypedServerCommand
 from players.entity import Player
-from players.helpers import index_from_userid
 
 
 def health(userid, iHealth):
@@ -52,6 +51,15 @@ def setgravity(userid, gravityScale):
 
 def deathadd(userid, numDeaths):
     Player.from_userid(int(userid)).deaths += int(numDeaths)
+
+def burn(userid, duration):
+    #
+    # playerlib's burn() won't work here
+    # as they uses `es_fire` which is no longer working as of css2025
+    #
+    # playerlib.getPlayer(userid).burn()
+    #
+    Player.from_userid(int(userid)).call_input("IgniteLifetime", duration)
 
 #
 # Import this module from somewhere at least once to enable the following commands
