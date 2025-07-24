@@ -9,13 +9,13 @@ from players.entity import Player
 
 
 def health(userid, iHealth):
-    playerlib.getPlayer(userid).setHealth(iHealth)
+    playerlib.getPlayer(userid).setHealth(int(iHealth))
 
 def sethealth(userid, iHealth):
     health(userid, iHealth)
 
 def speed(userid, multiplier):
-    playerlib.getPlayer(userid).setSpeed(multiplier)
+    playerlib.getPlayer(userid).setSpeed(float(multiplier))
 
 def noclip(userid, isEnabled):
     playerlib.getPlayer(userid).noclip(isEnabled)
@@ -44,10 +44,10 @@ def slay(userid):
 def damage(inflictorUserid, victimUserid, damage):
     player = playerlib.getPlayer(victimUserid)
     health = player.getHealth()
-    player.setHealth(health - damage)
+    player.setHealth(health - int(damage))
 
 def setgravity(userid, gravityScale):
-    Player.from_userid(int(userid)).gravity = gravityScale
+    Player.from_userid(int(userid)).gravity = float(gravityScale)
 
 def deathadd(userid, numDeaths):
     Player.from_userid(int(userid)).deaths += int(numDeaths)
@@ -65,5 +65,9 @@ def burn(userid, duration):
 # Import this module from somewhere at least once to enable the following commands
 #
 @TypedServerCommand("est_spawn")
-def on_est_spawn(command_info, userid:int):
+def on_est_spawn(command_info, userid):
     spawn(userid)
+
+@TypedServerCommand("est_sethealth")
+def on_est_sethealth(command_info, userid, iHealth):
+    health(userid, iHealth)
