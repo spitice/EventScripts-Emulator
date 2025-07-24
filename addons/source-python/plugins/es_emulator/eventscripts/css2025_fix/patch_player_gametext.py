@@ -51,10 +51,14 @@ class PlayerGameText:
 player_gametext_map = {}
 
 def give_gametext(userid):
+    global player_gametext_map
+
     gametext = PlayerGameText(userid)
     player_gametext_map[userid] = gametext
 
 def fire_gametext(userid, inputName: str, params: str = ""):
+    global player_gametext_map
+
     userid = str(userid)
 
     gametext = None
