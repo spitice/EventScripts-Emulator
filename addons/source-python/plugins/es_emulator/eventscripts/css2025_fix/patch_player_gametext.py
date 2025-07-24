@@ -60,7 +60,8 @@ def fire_gametext(userid, inputName: str, params: str = ""):
     gametext = None
     if userid in player_gametext_map:
         gametext = player_gametext_map[userid]
-    else:
+    #else:
+    if gametext is None:
         gametext = give_gametext(userid)
 
     inputName = inputName.lower()
