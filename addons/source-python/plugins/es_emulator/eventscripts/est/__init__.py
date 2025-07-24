@@ -1,4 +1,6 @@
 
+from collections.abc import Iterable
+
 import es
 import playerlib
 
@@ -29,8 +31,13 @@ def spawn(userid, bForce = 0):
     #es.spawnplayer(userid)  # spawnplayer cannot specify bForce
     Player.from_userid(int(userid)).spawn(bForce)
 
-def team(userid, team):
-    Player.from_userid(int(userid)).switch_team(team)
+def team(userid_or_userids, team):
+    userids = userid_or_userids
+    if not isinstance(userid_or_userids, Iterable):
+        userids = [userid_or_userids]
+
+    for userid in userids:
+        Player.from_userid(int(userid)).switch_team(team)
 
 def slay(userid):
     playerlib.getPlayer(userid).slay()
