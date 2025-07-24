@@ -212,6 +212,8 @@ class ESEventListener(GameEventListener):
         userid = current_event_vars.get('userid', 0)
         if userid:
             fill_event_vars(userid, 'user')
+            # [css2025] Generate no affix version as well
+            fill_event_vars(userid, '')
 
         attacker = current_event_vars.get('attacker', 0)
         if attacker:
