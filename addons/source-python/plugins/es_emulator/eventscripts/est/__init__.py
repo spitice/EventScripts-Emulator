@@ -47,6 +47,12 @@ def damage(inflictorUserid, victimUserid, damage):
     health = player.getHealth()
     player.setHealth(health - damage)
 
+def setgravity(userid, gravityScale):
+    Player.from_userid(int(userid)).gravity = gravityScale
+
+def deathadd(userid, numDeaths):
+    Player.from_userid(int(userid)).deaths += int(numDeaths)
+
 #
 # Import this module from somewhere at least once to enable the following commands
 #
