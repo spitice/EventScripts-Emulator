@@ -56,6 +56,8 @@ def give_gametext(userid):
     gametext = PlayerGameText(userid)
     player_gametext_map[userid] = gametext
 
+    return gametext
+
 def fire_gametext(userid, inputName: str, params: str = ""):
     global player_gametext_map
 
