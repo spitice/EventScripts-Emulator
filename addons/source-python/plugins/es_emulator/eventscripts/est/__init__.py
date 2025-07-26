@@ -1,11 +1,12 @@
 
 from collections.abc import Iterable
 
+from commands.typed import TypedServerCommand
+from entities.entity import Entity
+from players.entity import Player
+
 import es
 import playerlib
-
-from commands.typed import TypedServerCommand
-from players.entity import Player
 
 
 def health(userid, iHealth):
@@ -71,3 +72,33 @@ def on_est_spawn(command_info, userid):
 @TypedServerCommand("est_sethealth")
 def on_est_sethealth(command_info, userid, iHealth):
     health(userid, iHealth)
+
+@TypedServerCommand("est_RemoveWeapon")
+def on_est_RemoveWeapon(command_info, userid, slot):
+    player = playerlib.getPlayer(userid)
+
+    slot = int(slot)
+    weaponName = None
+    if slot == 1:
+        weaponName = player.getPrimary()
+    elif slot == 2:
+        weaponName = player.getSecondary()
+    elif slot == 3:
+        weaponName = "knife"
+
+    if weaponName is None or weaponName == '0':
+        return
+
+    weaponEntIndex = player.getWeaponIndex(weaponName)
+
+    if weaponEntIndex == 0:
+        return
+
+    # Remove the weapon
+    Entity(weaponEntIndex).call_input("Kill")
+
+    #print(f"[est_RemoveWeapon] Removed weapon ({weaponName} at slot {slot}) from the player {userid}")
+
+@TypedServerCommand("est_speed")
+def on_est_speed(command_info, userid, multiplier):
+    speed(userid, multiplier)
