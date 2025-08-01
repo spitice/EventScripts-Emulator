@@ -10,12 +10,14 @@ addons/source-python/plugins/es_emulator/eventscripts/cannonsz
 addons/source-python/plugins/es_emulator/eventscripts/color
 addons/source-python/plugins/es_emulator/eventscripts/csde
 addons/source-python/plugins/es_emulator/eventscripts/damagedisplay
+addons/source-python/plugins/es_emulator/eventscripts/disable_knifekill
 addons/source-python/plugins/es_emulator/eventscripts/donkeykong
 addons/source-python/plugins/es_emulator/eventscripts/ezfilter
 addons/source-python/plugins/es_emulator/eventscripts/fetboy
 addons/source-python/plugins/es_emulator/eventscripts/give_glock
 addons/source-python/plugins/es_emulator/eventscripts/greburn
 addons/source-python/plugins/es_emulator/eventscripts/headshot
+addons/source-python/plugins/es_emulator/eventscripts/hebomb
 addons/source-python/plugins/es_emulator/eventscripts/respawn
 addons/source-python/plugins/es_emulator/eventscripts/rocket
 addons/source-python/plugins/es_emulator/eventscripts/sammo
