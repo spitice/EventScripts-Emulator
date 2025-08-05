@@ -1,4 +1,5 @@
 
+from collections.abc import Callable
 from collections.abc import Iterable
 
 from commands.typed import TypedServerCommand
@@ -8,28 +9,49 @@ from players.entity import Player
 import es
 import playerlib
 
+def getEsPlayerByUserid(userid) -> playerlib.Player | None:
+    try:
+        return playerlib.getPlayer(userid)
+    except playerlib.UseridError:
+        return None
+
+def getSpPlayerByUserid(userid) -> Player | None:
+    try:
+        return Player.from_userid(int(userid))
+    except:
+        return None
+
+def doEsPlayer(userid, fn: Callable[[playerlib.Player], None]):
+    player = getEsPlayerByUserid(userid)
+    if player is not None:
+        fn(player)
+
+def doSpPlayer(userid, fn: Callable[[Player], None]):
+    player = getSpPlayerByUserid(userid)
+    if player is not None:
+        fn(player)
 
 def health(userid, iHealth):
-    playerlib.getPlayer(userid).setHealth(int(iHealth))
+    doEsPlayer(userid, lambda player: player.setHealth(int(iHealth)))
 
 def sethealth(userid, iHealth):
     health(userid, iHealth)
 
 def speed(userid, multiplier):
-    playerlib.getPlayer(userid).setSpeed(float(multiplier))
+    doEsPlayer(userid, lambda player: player.setSpeed(float(multiplier)))
 
 def noclip(userid, isEnabled):
-    playerlib.getPlayer(userid).noclip(isEnabled)
+    doEsPlayer(userid, lambda player: player.noclip(isEnabled))
 
 def freeze(userid, isFrozen):
-    playerlib.getPlayer(userid).freeze(isFrozen)
+    doEsPlayer(userid, lambda player: player.freeze(isFrozen))
 
 def give(userid, weaponName):
     es.give(userid, weaponName)
 
 def spawn(userid, bForce = 0):
     #es.spawnplayer(userid)  # spawnplayer cannot specify bForce
-    Player.from_userid(int(userid)).spawn(bForce)
+    doSpPlayer(userid, lambda player: player.spawn(bForce))
 
 def team(userid_or_userids, team):
     userids = userid_or_userids
@@ -37,21 +59,32 @@ def team(userid_or_userids, team):
         userids = [userid_or_userids]
 
     for userid in userids:
-        Player.from_userid(int(userid)).switch_team(team)
+        doSpPlayer(userid, lambda player: player.switch_team(team))
 
 def slay(userid):
-    playerlib.getPlayer(userid).slay()
+    doEsPlayer(userid, lambda player: player.slay())
 
 def damage(inflictorUserid, victimUserid, damage):
-    player = playerlib.getPlayer(victimUserid)
+    player = getEsPlayerByUserid(victimUserid)
+    if player is None:
+        return
+
     health = player.getHealth()
     player.setHealth(health - int(damage))
 
 def setgravity(userid, gravityScale):
-    Player.from_userid(int(userid)).gravity = float(gravityScale)
+    player = getSpPlayerByUserid(userid)
+    if player is None:
+        return
+
+    player.gravity = float(gravityScale)
 
 def deathadd(userid, numDeaths):
-    Player.from_userid(int(userid)).deaths += int(numDeaths)
+    player = getSpPlayerByUserid(userid)
+    if player is None:
+        return
+
+    player.deaths += int(numDeaths)
 
 def burn(userid, duration):
     #
@@ -60,7 +93,7 @@ def burn(userid, duration):
     #
     # playerlib.getPlayer(userid).burn()
     #
-    Player.from_userid(int(userid)).call_input("IgniteLifetime", duration)
+    doSpPlayer(userid, lambda player: player.call_input("IgniteLifetime", duration))
 
 #
 # Import this module from somewhere at least once to enable the following commands
@@ -75,7 +108,9 @@ def on_est_sethealth(command_info, userid, iHealth):
 
 @TypedServerCommand("est_RemoveWeapon")
 def on_est_RemoveWeapon(command_info, userid, slot):
-    player = playerlib.getPlayer(userid)
+    player = getEsPlayerByUserid(userid)
+    if player is None:
+        return
 
     slot = int(slot)
     weaponName = None
