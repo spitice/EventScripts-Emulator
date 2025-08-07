@@ -218,10 +218,11 @@ def ForceServerCommand(command_str):
     # ConCommand::dispatch seems to be broken when using on CVars managed by SourceMod plugins.
     # So avoid using it.
     #
-    # For now, let's just use `insert_command_string` for everything.
+    # For now, let's just use IVEngineServer::ServerCommand for everything.
     # (which seems to be less performant I guess.)
     #
-    insert_command_string(command_str)
+    # insert_command_string(command_str)
+    queue_command_string(command_str)
     return 1
 
     con_command = cvar.find_command(c[0])
