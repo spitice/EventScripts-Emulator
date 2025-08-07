@@ -214,7 +214,8 @@ class Stack(object):
         self.error(commandname, e)
 
     except NameError as e:
-      self.error(commandname, 'The %s \'%s\' could not be found' % e.args)
+      # [css2025] Fix the error format string
+      self.error(commandname, 'The command \'%s\' could not be found' % commandname)
 
     except (ValueError, IOError, RuntimeError) as e:
       self.error(commandname, e)
