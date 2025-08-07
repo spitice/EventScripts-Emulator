@@ -5,6 +5,7 @@ import experiments.expr_game_text
 import experiments.expr_sm_cvars
 import experiments.expr_sound
 import experiments.expr_strip
+import experiments.expr_timeq
 
 is_burn_enabled = False
 is_centermsg_enabled = False
@@ -12,6 +13,7 @@ is_game_text_enabled = False
 is_sm_cvars_enabled = False
 is_sound_enabled = False
 is_strip_enabled = False
+is_timeq_enabled = False
 
 def round_start(ev):
     if is_centermsg_enabled:
@@ -30,6 +32,8 @@ def weapon_fire(ev):
         experiments.expr_burn.weapon_fire(ev)
     if is_game_text_enabled:
         experiments.expr_game_text.weapon_fire(ev)
+    if is_timeq_enabled:
+        experiments.expr_timeq.weapon_fire(ev)
 
 def player_hurt(ev):
     if is_sound_enabled:
