@@ -25,7 +25,8 @@ def apply():
 
     @monkeypatch
     def fire(*args):
-        if len(args) >= 4:
+        nArgs = len(args)
+        if nArgs == 3 or nArgs == 4:
             target = args[1]
             if target == "player_weaponstrip":
                 es.dbgmsg(2, f"[css2025_win32] fire strip on player")

@@ -18,6 +18,7 @@ addons/source-python/plugins/es_emulator/eventscripts/give_glock
 addons/source-python/plugins/es_emulator/eventscripts/greburn
 addons/source-python/plugins/es_emulator/eventscripts/headshot
 addons/source-python/plugins/es_emulator/eventscripts/hebomb
+addons/source-python/plugins/es_emulator/eventscripts/pammo
 addons/source-python/plugins/es_emulator/eventscripts/respawn
 addons/source-python/plugins/es_emulator/eventscripts/rocket
 addons/source-python/plugins/es_emulator/eventscripts/sammo
